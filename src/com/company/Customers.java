@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -8,6 +9,7 @@ public class Customers {
 
     private Scanner scanner = new Scanner(System.in);
     private ArrayList<Customer> customers = new ArrayList<Customer>();
+    private Formatter file;
 
     public void create(Customer customer){
         customers.add(customer);
@@ -23,6 +25,12 @@ public class Customers {
         return customers;
     }
 
+//    public void Record(){
+//        for(Customer c : customers){
+//            file.format(c);
+//        }
+//    }
+
     public void search(String name,String pwd) {
         int flag = 0;
         int count = 3;
@@ -35,9 +43,6 @@ public class Customers {
                     System.out.println("Door Unlocked.\n");
                     System.out.print("Would you like to request room cleaning?(Yes/No): ");
                     String req = scanner.nextLine();
-                    if(req.equals("Yes")){
-
-                    }
                     break;
                 } else {
                     for (int k = 0; k < 3; k++) {
