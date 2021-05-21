@@ -165,7 +165,7 @@ public class Main {
 
     public static void LoginCustomer(Customers customers, Manager manager, Receptionist receptionist, RoomService roomService) throws Exception {
         int[] pincnfrm = {1111, 1112, 2222, 2223, 3333, 3334};
-        int c = 2;
+        int c = 3;
         int k = 0;
 
         System.out.println("NOTE: Incase of signup enter ' - ' in both fields.\n");
@@ -187,9 +187,9 @@ public class Main {
 
             loop:
                 for (int i = 0; i < pincnfrm.length; i++) {
-                    assert c >= -1 : "System is locked! Contact Support";
 
-                    if (pincnfrm[i] == pin) {
+
+                     if (pincnfrm[i] == pin) {
                         k = 0;
                         if (pin == pincnfrm[0]) {
                             k = 1;
@@ -218,10 +218,16 @@ public class Main {
 //                        manager.increaseCheckin();
 //                        System.out.println(name + manager.status());
 //                    }
-                    } else if( (i == pincnfrm.length - 1) && (k == 0) ) {
+                    }
+
+                    else if(c == 0 && k == 0) {
+                        assert false : "System is locked! Contact Support";
+                    }
+
+                    else if( (i == pincnfrm.length - 1) && (k == 0) ) {
                         for (int a = 0; a < pincnfrm.length; a++) {
                             scanner.nextLine();
-                            System.out.printf("You have %d more tries!!", c+1);
+                            System.out.printf("You have %d more tries!!", c);
                             System.out.print("\nInvalid Pin! Enter again: ");
                             pin = scanner.nextInt();
                             c--;
@@ -286,4 +292,4 @@ public class Main {
 //        c--;
 //        continue loop;
 //        }
-//        }
+//        } new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
