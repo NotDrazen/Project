@@ -34,6 +34,8 @@ public class Customers {
     public void search(String name,String pwd) {
         int flag = 0;
         int count = 3;
+        boolean valid = true;
+        boolean notValid = false;
 
         for(Customer a : customers) {
             if (a.getName().compareTo(name) == 0 ){
@@ -41,9 +43,6 @@ public class Customers {
                 System.out.println("Room Number: " + a.getRoom_No());
                 if (a.getPwd().compareTo(pwd) == 0) {
                     System.out.println("Door Unlocked.\n");
-                    System.out.print("Would you like to request room cleaning?(Yes/No): ");
-                    String req = scanner.nextLine();
-                    break;
                 } else {
                     for (int k = 0; k < 3; k++) {
                         System.out.print("You have " + count + " more tries!!");

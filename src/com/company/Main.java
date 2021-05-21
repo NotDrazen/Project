@@ -62,6 +62,8 @@ public class Main {
         RoomService roomService = new RoomService("Akmal", "Male", 20, 42010232, 0333333, "Ali@gmail.com");
         Receptionist receptionist = new Receptionist("Nasir", "Male", 20, 42010232, 0333333, "Ali@gmail.com");
         Manager manager = new Manager("Ali", "Male", 20, 42010232, 0333333, "Ali@gmail.com");
+        Manager manager1 = new Manager("Kalu", "Male", 20, 42010232, 0333333, "Ali@gmail.com");
+
 //        manager.working_hrs();
 //        receptionist.working_hrs();
 //        roomService1.working_hrs();
@@ -69,21 +71,20 @@ public class Main {
         System.out.println("1. Login\n2. Signup\n3. Management Info\n4. Exit\n");
         System.out.print("Option: ");
         int option = scanner.nextInt();
+
         switch (option) {
             case 1:
                 while (true) {
                     scanner.nextLine();
-                    try {
-                        LoginCustomer(customers, manager, receptionist, roomService);
-                    } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
-                    }
+                    LoginPortal(customers, manager, receptionist, roomService);
                 }
-
             case 2:
                 scanner.nextLine();
-                Main.SignUp(customers);
-                break;
+                Main.SignUp(customers, manager, receptionist, roomService);
+                while (true) {
+                    scanner.nextLine();
+                    LoginPortal(customers, manager, receptionist, roomService);
+                }
 
             case 3:
                 System.out.println();
@@ -163,7 +164,7 @@ public class Main {
 //    }
 
 
-    public static void LoginCustomer(Customers customers, Manager manager, Receptionist receptionist, RoomService roomService) throws Exception {
+    public static void LoginPortal(Customers customers, Manager manager, Receptionist receptionist, RoomService roomService) {
         int[] pincnfrm = {1111, 1112, 2222, 2223, 3333, 3334};
         int c = 3;
         int k = 0;
@@ -175,19 +176,18 @@ public class Main {
         String pwd = scanner.nextLine();
 
         if (name.equals("-") && pwd.equals("-")) {
-            try {
-                Runtime.getRuntime().exec("cls");
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
-            Main.SignUp(customers);
+//            try {
+//                Runtime.getRuntime().exec("cls");
+//            } catch (Exception ex) {
+//                System.out.println(ex.getMessage());
+//            }
+            Main.SignUp(customers, manager, receptionist, roomService);
         } else if ((name.equals(manager.getName()) || name.equals(roomService.getName()) || name.equals(receptionist.getName())) && pwd.equals("admin")) {
             System.out.print("Enter pin for specific designation: ");
             int pin = scanner.nextInt();
 
             loop:
                 for (int i = 0; i < pincnfrm.length; i++) {
-
 
                      if (pincnfrm[i] == pin) {
                         k = 0;
@@ -239,11 +239,14 @@ public class Main {
 
         } else {
             customers.search(name, pwd);
+            System.out.println("Do you want room cleaning(Yes/No): ");
+            String select = scanner.nextLine();
+            if(select.equalsIgnoreCase("Yes"))
+            RoomService.requestService();
         }
     }
 
-
-        public static void SignUp (Customers customers){
+        public static void SignUp (Customers customers, Manager manager, Receptionist receptionist, RoomService roomService){
             System.out.print("\nSIGN UP\n");
 
             System.out.print("Enter your name : ");
@@ -267,16 +270,21 @@ public class Main {
             System.out.print("Confirm password: ");
             String pwdcnfrm = scanner.nextLine();
             if (pwd.equals(pwdcnfrm)) {
+                System.out.println("Account created successfully!!");
 
                 Customer c = new Customer(name, gender, age, CNIC, phone_Number, email, pwd);
 
                 customers.create(c);
             } else {
-                while (true) {
+                while (!pwd.equals(pwdcnfrm)) {
                     System.out.print("Wrong! Re-enter password: ");
                     pwdcnfrm = scanner.nextLine();
                     if (pwd.equals(pwdcnfrm)) {
-                        break;
+                        System.out.println("Account created successfully!!");
+
+                        Customer c = new Customer(name, gender, age, CNIC, phone_Number, email, pwd);
+
+                        customers.create(c);
                     }
                 }
             }

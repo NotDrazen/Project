@@ -14,17 +14,17 @@ public class RoomService extends Staff{
         return count;
     }
 
-    public boolean checkStaff(){
+    public static boolean checkStaff(){
         if(count>0) {
             return true;
         }
         return false;
     }
 
-    public void requestService(){
+    public static void requestService(){
         if(checkStaff()) {
             System.out.println(count + " Room service staff available");
-            System.out.println(getName() + " is coming");
+            System.out.println("Staff is coming");
             count--;
         }
         else{
